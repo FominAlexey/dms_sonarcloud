@@ -1,0 +1,9 @@
+.content-header {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.container-feedback {
+    position: absolute;
+    right: 0;
+}

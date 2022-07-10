@@ -1,0 +1,46 @@
+:root {
+    --utilBorder-radius: 50%;
+    --utilPadding: 5%;
+    --utilWidth: 25px;
+    --utilHeight: 15px;
+    --utilText-align: center;
+    --utilVertical-Align: center;
+    --utilMargin-left: auto;
+    --utilMargin-right: auto;
+}
+
+.employee-utilization-red {
+    background-color: #FB000D;
+    border-radius: var(--utilBorder-radius);
+    padding: var(--utilPadding);
+    width: var(--utilWidth);
+    height: var(--utilHeight);
+    text-align: var(--utilText-align);
+    vertical-Align: var(--utilVertical-Align);
+    margin-left: var(--utilMargin-left);
+    margin-right: var(--utilMargin-right);
+}
+
+.employee-utilization-yellow {
+    background-color: #FFFA00;
+    border-radius: var(--utilBorder-radius);
+    padding: var(--utilPadding);
+    width: var(--utilWidth);
+    height: var(--utilHeight);
+    text-align: var(--utilText-align);
+    vertical-Align: var(--utilVertical-Align);
+    margin-left: var(--utilMargin-left);
+    margin-right: var(--utilMargin-right);
+}
+
+.employee-utilization-green {
+    background-color: #67E300;
+    border-radius: var(--utilBorder-radius);
+    padding: var(--utilPadding);
+    width: var(--utilWidth);
+    height: var(--utilHeight);
+    text-align: var(--utilText-align);
+    vertical-Align: var(--utilVertical-Align);
+    margin-left: var(--utilMargin-left);
+    margin-right: var(--utilMargin-right);
+}

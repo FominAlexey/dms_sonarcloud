@@ -1,0 +1,11 @@
+.calendar-cell {
+    border-radius: 50%;
+    padding: 5%;
+    width: 1rem;
+    text-align: center;
+}
+
+.calendar-label {
+    font-size: 14px;
+    font-weight: normal;
+}

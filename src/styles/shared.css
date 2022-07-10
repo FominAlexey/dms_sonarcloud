@@ -1,0 +1,86 @@
+.text-center {
+    text-align: center;
+}
+
+.fw-bold {
+    font-weight: bold;
+}
+
+.fs-14 {
+    font-size: 14px;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+.mr-5 {
+    margin-right: 5px;
+}
+
+.mr-20 {
+    margin-right: 20px;
+}
+
+.mr-30 {
+    margin-right: 30px;
+}
+
+.ml-20 {
+    margin-left: 20px;
+}
+
+.h-end {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.h-start {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.h-space-between {
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+}
+
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.v-center {
+    display: flex;
+    align-items: center;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.cursor-default {
+    cursor: default;
+}
+
+.combobox-employee {
+    display: block;
+    width: 20%;
+}
+
+.red {
+    color: red;
+}
+
+.black {
+    color: black;
+}
+
+
+.goToday_4cbef05b {
+    right: 10px;
+}

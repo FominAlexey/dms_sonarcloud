@@ -1,0 +1,7 @@
+.custom-edit-dialog .ms-Dialog-header {
+    display: none;
+}
+
+.custom-edit-dialog .ms-Dialog-inner {
+    padding: 24px;
+}

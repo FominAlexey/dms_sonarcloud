@@ -1,0 +1,71 @@
+{
+  "routes": [
+    {
+      "route": "/Calendar",
+      "serve": "/index.html"
+    },
+    {
+      "route": "/TimeTracking",
+      "serve": "/index.html"
+    },
+    {
+      "route": "/Expenses",
+      "serve": "/index.html"
+    },
+    {
+      "route": "/MyEventLogs",
+      "serve": "/index.html"
+    },
+    {
+      "route": "/Login",
+      "serve": "/index.html"
+    },
+    {
+      "route": "/MyLimits",
+      "serve": "/index.html"
+    },
+    {
+      "route": "/MyProfile",
+      "serve": "/index.html"
+    },
+    {
+      "route": "/Confirmations",
+      "serve": "index.html"
+    },
+    {
+      "route": "/Employees",
+      "serve": "/index.html"
+    },
+	{
+      "route": "/Projects",
+      "serve": "/index.html"
+    },
+	{
+      "route": "/Assets",
+      "serve": "/index.html"
+    },
+	{
+      "route": "/Reports/*",
+      "serve": "/index.html"
+    },
+	{
+      "route": "/UsersManagement",
+      "serve": "/index.html"
+    },
+	{
+      "route": "/Dictionaries",
+      "serve": "/index.html"
+    },
+	{
+      "route": "/ProductionCalendar",
+      "serve": "/index.html"
+    },
+	{
+      "route": "/ResetPassword",
+      "serve": "/index.html"
+    },
+  ],
+  "mimeTypes": {
+      "custom": "text/html"
+  }
+}

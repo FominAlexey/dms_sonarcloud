@@ -1,0 +1,22 @@
+.container-menu-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.styleBlock {
+    flex-basis:230%;
+}
+
+.commandBarBlock {
+    flex-basis:110%;
+}
+
+.themeBlock {
+    flex-basis:60%;
+}
+
+.hr-header {
+    border-bottom: 1px solid #eee;
+    height: 50px;
+}

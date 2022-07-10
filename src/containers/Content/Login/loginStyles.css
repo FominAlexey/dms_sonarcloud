@@ -1,0 +1,12 @@
+.login-header {
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.login-main-stack {
+    width: 300px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
