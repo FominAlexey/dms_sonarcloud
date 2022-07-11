@@ -83,11 +83,11 @@ const ProjectEditComponent: FC<Props> = (props: Props) => {
 
         // Update team members list items
         const deleteTeamMember = (id: string) => {
-            setProjectTeamMembers(projectTeamMembers!.filter(t => t.employeeId !== id) || null);
+            setProjectTeamMembers(projectTeamMembers.filter(t => t.employeeId !== id) || null);
             setTeamMember(undefined);
         };
 
-        const items = projectTeamMembers!.map(item => {
+        const items = projectTeamMembers.map(item => {
             return {
                 key: item.employeeId,
                 fullName: item.fullName,
@@ -108,7 +108,7 @@ const ProjectEditComponent: FC<Props> = (props: Props) => {
     // Update team members list if added new team member
     useEffect(() => {
         if (newTeamMember != null) {
-            setProjectTeamMembers([...projectTeamMembers!, newTeamMember]);
+            setProjectTeamMembers([...projectTeamMembers, newTeamMember]);
         }
         setNewTeamMember(null);
     }, [newTeamMember, projectTeamMembers]);
@@ -134,7 +134,7 @@ const ProjectEditComponent: FC<Props> = (props: Props) => {
 
     const addTeamMember = () => {
         const _newTeamMember = {
-            employeeId: teamMember!.employeeId,
+            employeeId: teamMember.employeeId,
             fullName: teamMember?.fullName!,
         };
         setNewTeamMember(_newTeamMember);
@@ -147,9 +147,9 @@ const ProjectEditComponent: FC<Props> = (props: Props) => {
     const _onSave = () => {
         const newProject: ProjectEdit = {
             id: props.project.id,
-            title: projectTitle!.trim(),
+            title: projectTitle.trim(),
             managerId: projectManagerId,
-            client: projectClient!.trim(),
+            client: projectClient.trim(),
             teamMembers: projectTeamMembers || [],
         };
         props.saveProject(newProject);
@@ -157,10 +157,7 @@ const ProjectEditComponent: FC<Props> = (props: Props) => {
 
     // On change form values
     const _onChangeManager = (
-        event: React.FormEvent<IComboBox>,
         option?: IComboBoxOption,
-        index?: number,
-        value?: string,
     ): void => {
         if (option) {
             setProjectManagerId(option.key.toString());
@@ -168,7 +165,7 @@ const ProjectEditComponent: FC<Props> = (props: Props) => {
         }
     };
 
-    const _onChangeTitle = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
+    const _onChangeTitle = (newValue?: string) => {
         setProjectTitle(newValue);
         if (newValue) {
             setValidation({ ...validation, isValidTitle: newValue.trim().length !== 0 });
@@ -176,7 +173,7 @@ const ProjectEditComponent: FC<Props> = (props: Props) => {
             setValidation({ ...validation, isValidTitle: false });
         }
     };
-    const _onChangeClient = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
+    const _onChangeClient = (newValue?: string) => {
         setProjectClient(newValue);
         if (newValue) {
             setValidation({ ...validation, isValidClient: newValue.trim().length !== 0 });
@@ -186,10 +183,7 @@ const ProjectEditComponent: FC<Props> = (props: Props) => {
     };
 
     const _onChangeTeamMemberId = (
-        event: React.FormEvent<IComboBox>,
         option?: IComboBoxOption,
-        index?: number,
-        value?: string,
     ): void => {
         if (option) {
             const _teamMember: TeamMember = { employeeId: option.key.toString(), fullName: option.text };

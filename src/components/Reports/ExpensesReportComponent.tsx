@@ -10,8 +10,6 @@ interface Props {
     expenses: Expense[];
     isLoading: boolean;
     saveFile: (documentInfoArg: DocumentInfoType) => ActionAsyncThunk<boolean, DocumentInfoType>;
-    // fromDate: Date;
-    // toDate: Date;
 }
 
 const ExpensesReportComponent: FC<Props> = (props: Props) => {
@@ -29,13 +27,6 @@ const ExpensesReportComponent: FC<Props> = (props: Props) => {
             minWidth: 100,
             maxWidth: 200,
         },
-        // {
-        //     key: 'expensesReport_paymentDate',
-        //     name: 'Дата оплаты',
-        //     fieldName: 'paymentDate',
-        //     minWidth: 15,
-        //     maxWidth: 150
-        // },
         {
             key: 'expensesReport_description',
             name: 'Описание',

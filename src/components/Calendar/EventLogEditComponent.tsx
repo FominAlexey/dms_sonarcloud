@@ -12,10 +12,9 @@ import {
 import { EventLogEdit } from 'src/DAL/Calendar';
 import { EventLogCategory } from 'src/DAL/Dictionaries';
 import { toUTC, getDateFromLocaleString, DAY_PICKER_STRINGS } from 'src/shared/DateUtils';
-import { requiredMessage } from 'src/shared/Constants';
+import { requiredMessage, CREATED } from 'src/shared/Constants';
 import { verticalGapStackTokens } from 'src/shared/Styles';
 import EditDialog from 'src/components/EditDialog';
-import { CREATED } from 'src/shared/Constants';
 import { ActionAsyncThunk } from 'src/shared/Common';
 
 interface Props {
@@ -73,7 +72,7 @@ const EventLogEditComponent: FC<Props> = (props: Props) => {
             id: props.eventLog.id,
             employeeId: props.userId,
             eventCategoryId: eventLogCategoryId,
-            reason: eventLogReason!.trim(),
+            reason: eventLogReason.trim(),
             startDate: toUTC(eventLogStartDate),
             endDate: eventLogHasEndDate && eventLogEndDate ? toUTC(eventLogEndDate) : null,
             approvalStatusId: CREATED,
@@ -84,19 +83,15 @@ const EventLogEditComponent: FC<Props> = (props: Props) => {
     };
 
     const _onChangeCategory = (
-        event: React.FormEvent<IComboBox>,
         option?: IComboBoxOption,
-        index?: number,
-        value?: string,
     ): void => {
         if (option) {
-            //setEventLogCategoryId(Number.parseInt(option.key.toString()));
             setEventLogCategoryId(option.key.toString());
             setValidation({ ...validation, isValidEventCategoryId: true });
         }
     };
 
-    const _onChangeReason = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
+    const _onChangeReason = (newValue?: string) => {
         setEventLogReason(newValue);
         if (newValue) {
             setValidation({ ...validation, isValidReason: newValue.trim().length !== 0 });
@@ -107,7 +102,7 @@ const EventLogEditComponent: FC<Props> = (props: Props) => {
 
     const _onChangeStartDate = (date: Date | null | undefined) => {
         date ? setEventLogStartDate(date) : setEventLogStartDate(new Date());
-        if (eventLogHasEndDate) setValidation({ ...validation, isValidDates: toUTC(date!) < toUTC(eventLogEndDate!) });
+        if (eventLogHasEndDate) setValidation({ ...validation, isValidDates: toUTC(date!) < toUTC(eventLogEndDate) });
     };
 
     const _onChangeEndDate = (date: Date | null | undefined) => {
@@ -116,7 +111,6 @@ const EventLogEditComponent: FC<Props> = (props: Props) => {
     };
 
     const _onChangeHasEndDate = (
-        event?: React.FormEvent<HTMLInputElement | HTMLElement> | undefined,
         checked?: boolean | undefined,
     ) => {
         setEventLogEndDate(new Date());
@@ -160,7 +154,7 @@ const EventLogEditComponent: FC<Props> = (props: Props) => {
                 <DatePicker
                     label="Дата начала"
                     firstDayOfWeek={DayOfWeek.Monday}
-                    formatDate={(date?) => date!.toLocaleDateString()}
+                    formatDate={(date?) => date.toLocaleDateString()}
                     value={eventLogStartDate}
                     onSelectDate={_onChangeStartDate}
                     allowTextInput={true}
@@ -171,7 +165,7 @@ const EventLogEditComponent: FC<Props> = (props: Props) => {
                     label="Дата окончания"
                     disabled={!eventLogHasEndDate}
                     firstDayOfWeek={DayOfWeek.Monday}
-                    formatDate={(date?) => date!.toLocaleDateString()}
+                    formatDate={(date?) => date.toLocaleDateString()}
                     value={eventLogEndDate || new Date()}
                     onSelectDate={_onChangeEndDate}
                     allowTextInput={true}

@@ -21,7 +21,7 @@ const ResetPasswordComponent: FC<Props> = (props: Props) => {
     const [password, setPassword] = useState<string | undefined>('');
     const [validation, setValidation] = useState<boolean>(password ? PasswordReg.test(password) : false);
 
-    const _onChangePassword = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
+    const _onChangePassword = (newValue?: string) => {
         setPassword(newValue);
 
         if (newValue) {

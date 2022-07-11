@@ -25,7 +25,7 @@ const TaskCategoryEditComponent: FC<Props> = (props: Props) => {
         props.clearTaskCategory();
     };
 
-    const _onCahngeName = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
+    const _onCahngeName = (newValue?: string) => {
         setTaskCategoryName(newValue);
 
         if (newValue) {

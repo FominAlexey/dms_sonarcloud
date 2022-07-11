@@ -38,10 +38,10 @@ const UserProfileEditComponent: FC<Props> = (props: Props) => {
     const _onSave = () => {
         const newEmployee: EmployeeEdit = {
             id: props.employee.id,
-            fullName: employeeFullName!.trim(),
+            fullName: employeeFullName.trim(),
             birthDate: toUTC(employeeBirthDate),
             email: props.employee.email,
-            phone: employeePhone!.trim(),
+            phone: employeePhone.trim(),
             employedDate: toUTC(props.employee.employedDate),
             leaveDate: props.employee.leaveDate ? toUTC(props.employee.leaveDate) : null,
             isLeave: props.employee.isLeave,
@@ -53,7 +53,7 @@ const UserProfileEditComponent: FC<Props> = (props: Props) => {
         props.saveEmployee(newEmployee);
     };
 
-    const _onChangeFullname = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
+    const _onChangeFullname = (newValue?: string) => {
         setEmployeeFullname(newValue);
         if (newValue) {
             setValidation({ ...validation, isValidFullName: newValue.trim().length !== 0 });
@@ -62,7 +62,7 @@ const UserProfileEditComponent: FC<Props> = (props: Props) => {
         }
     };
 
-    const _onChangePhone = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
+    const _onChangePhone = (newValue?: string) => {
         setEmployeePhone(newValue);
         if (newValue) {
             if (PhoneReg.test(newValue)) {
@@ -107,7 +107,7 @@ const UserProfileEditComponent: FC<Props> = (props: Props) => {
                     label="Дата рождения"
                     value={employeeBirthDate}
                     firstDayOfWeek={DayOfWeek.Monday}
-                    formatDate={(date?) => date!.toLocaleDateString()}
+                    formatDate={(date?) => date.toLocaleDateString()}
                     onSelectDate={_onChangeBirthDate}
                     allowTextInput={true}
                     parseDateFromString={string => getDateFromLocaleString(string)}

@@ -23,11 +23,8 @@ const UsersManagementEditComponent: FC<RolesProps> = (props: RolesProps) => {
     const [isAdministrator, setIsAdministrator] = useState<boolean>(
         props.employee.roles.findIndex(r => r.id === ADMINISTRATOR) !== -1,
     );
-    // const [password, setPassword]=useState<string | undefined>(undefined);
-    // const [isValidPassword, setIsValidPassword] = useState(true);
 
     const _onChangeIsEmployee = (
-        ev?: React.FormEvent<HTMLElement | HTMLInputElement> | undefined,
         checked?: boolean | undefined,
     ) => {
         if (!checked) {
@@ -38,7 +35,6 @@ const UsersManagementEditComponent: FC<RolesProps> = (props: RolesProps) => {
     };
 
     const _onChangeIsManager = (
-        ev?: React.FormEvent<HTMLElement | HTMLInputElement> | undefined,
         checked?: boolean | undefined,
     ) => {
         if (!checked) {
@@ -49,7 +45,6 @@ const UsersManagementEditComponent: FC<RolesProps> = (props: RolesProps) => {
     };
 
     const _onChangeIsAdministrator = (
-        ev?: React.FormEvent<HTMLElement | HTMLInputElement> | undefined,
         checked?: boolean | undefined,
     ) => {
         if (!checked) {
@@ -58,21 +53,6 @@ const UsersManagementEditComponent: FC<RolesProps> = (props: RolesProps) => {
             setIsAdministrator(true);
         }
     };
-
-    // const _onChangePassword = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string | undefined) => {
-    //     setPassword(newValue);
-    //     if(newValue){
-    //         if(newValue.match(/^[a-zA-Z0-9!@#$%^&*]{8,}$/)){
-    //             setIsValidPassword(true)
-    //         }
-    //         else{
-    //             setIsValidPassword(false)
-    //         }
-    //     }
-    //     else{
-    //         setIsValidPassword(true)
-    //     }
-    // }
 
     const _onCloseDialog = () => {
         props.clearEmployee();
@@ -90,10 +70,6 @@ const UsersManagementEditComponent: FC<RolesProps> = (props: RolesProps) => {
 
         props.patchEmployee({ id: props.employee.id, roles });
 
-        // Update password
-        // if(password && isValidPassword){
-        //     props.setUserPassword(props.employee.id, password);
-        // }
     };
 
     return (
@@ -109,14 +85,6 @@ const UsersManagementEditComponent: FC<RolesProps> = (props: RolesProps) => {
                 <Checkbox label="Сотрудник" checked={isEmployee} onChange={_onChangeIsEmployee} />
                 <Checkbox label="Менеджер" checked={isManager} onChange={_onChangeIsManager} />
                 <Checkbox label="Администратор" checked={isAdministrator} onChange={_onChangeIsAdministrator} />
-                {/* <TextField 
-                    label="Пароль" 
-                    value={password}
-                    onChange={_onChangePassword}
-                    description="Введите новый пароль или оставьте поле пустым"
-                    errorMessage={isValidPassword ? undefined : errorPasswordMessage}
-                    type="password"
-                /> */}
             </Stack>
         </EditDialog>
     );

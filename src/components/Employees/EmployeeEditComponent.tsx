@@ -11,9 +11,8 @@ import {
 } from '@fluentui/react';
 import { Employee, EmployeeEdit, EmploymentTypes } from 'src/DAL/Employees';
 import { toUTC, getDateFromLocaleString, DAY_PICKER_STRINGS, getNextDate } from 'src/shared/DateUtils';
-import { requiredMessage } from 'src/shared/Constants';
+import { requiredMessage, EMPLOYEE } from 'src/shared/Constants';
 import { EmailReg, PhoneReg } from 'src/shared/RegExpressions';
-import { EMPLOYEE } from 'src/shared/Constants';
 import { verticalGapStackTokens } from 'src/shared/Styles';
 import EditDialog from 'src/components/EditDialog';
 import { ActionAsyncThunk } from 'src/shared/Common';
@@ -35,6 +34,8 @@ interface validationState {
     isValidLeave: boolean;
     isValidCloseManagerId: boolean;
 }
+
+type myDate = Date | null | undefined;
 
 const EmployeeEditComponent: FC<Props> = (props: Props) => {
     // Initial values
@@ -89,10 +90,10 @@ const EmployeeEditComponent: FC<Props> = (props: Props) => {
     const _onSave = () => {
         const newEmployee: EmployeeEdit = {
             id: props.employee.id,
-            fullName: employeeFullName!.trim(),
+            fullName: employeeFullName.trim(),
             birthDate: toUTC(employeeBirthDate),
-            email: employeeEmail!.trim(),
-            phone: employeePhone!.trim(),
+            email: employeeEmail.trim(),
+            phone: employeePhone.trim(),
             employedDate: toUTC(employeeEmployedDate),
             leaveDate: employeeLeave && employeeLeaveDate ? toUTC(employeeLeaveDate) : null,
             isLeave: employeeLeave,
@@ -105,10 +106,7 @@ const EmployeeEditComponent: FC<Props> = (props: Props) => {
     };
 
     const _onChangeManager = (
-        event: React.FormEvent<IComboBox>,
         option?: IComboBoxOption,
-        index?: number,
-        value?: string,
     ): void => {
         if (option) {
             setEmployeeManagerId(option.key.toString());
@@ -116,7 +114,7 @@ const EmployeeEditComponent: FC<Props> = (props: Props) => {
         }
     };
 
-    const _onChangeFullname = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
+    const _onChangeFullname = (newValue?: string) => {
         setEmployeeFullname(newValue);
         if (newValue) {
             setValidation({ ...validation, isValidFullName: newValue.trim().length !== 0 });
@@ -125,7 +123,7 @@ const EmployeeEditComponent: FC<Props> = (props: Props) => {
         }
     };
 
-    const _onChangeEmail = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
+    const _onChangeEmail = (newValue?: string) => {
         setEmployeeEmail(newValue);
         if (newValue) {
             if (EmailReg.test(newValue)) {
@@ -138,7 +136,7 @@ const EmployeeEditComponent: FC<Props> = (props: Props) => {
         }
     };
 
-    const _onChangePhone = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
+    const _onChangePhone = (newValue?: string) => {
         setEmployeePhone(newValue);
         if (newValue) {
             if (PhoneReg.test(newValue)) {
@@ -151,23 +149,22 @@ const EmployeeEditComponent: FC<Props> = (props: Props) => {
         }
     };
 
-    const _onChangeBirthDate = (date: Date | null | undefined) => {
+    const _onChangeBirthDate = (date: myDate) => {
         date ? setEmployeeBirthDate(date) : setEmployeeBirthDate(new Date());
     };
 
-    const _onChangeEmployedDate = (date: Date | null | undefined) => {
+    const _onChangeEmployedDate = (date: myDate) => {
         date ? setEmployeeEmployedDate(date) : setEmployeeEmployedDate(new Date());
         setValidation({ ...validation, isValidEmployeedDate: date !== null });
         if (employeeLeave) setValidation({ ...validation, isValidLeaveDate: toUTC(date!) < toUTC(employeeLeaveDate!) });
     };
 
-    const _onChangeLeaveDate = (date: Date | null | undefined) => {
+    const _onChangeLeaveDate = (date: myDate) => {
         date ? setEmployeeLeaveDate(date) : setEmployeeLeaveDate(null);
         setValidation({ ...validation, isValidLeaveDate: toUTC(employeeEmployedDate) < toUTC(date!) });
     };
 
     const _onChangeLeave = (
-        ev?: React.FormEvent<HTMLInputElement | HTMLElement> | undefined,
         checked?: boolean | undefined,
     ) => {
         setEmployeeLeaveDate(getNextDate(new Date()));
@@ -181,10 +178,7 @@ const EmployeeEditComponent: FC<Props> = (props: Props) => {
     };
 
     const _onChangeEmploymenttype = (
-        event: React.FormEvent<IComboBox>,
         option?: IComboBoxOption,
-        index?: number,
-        value?: string,
     ): void => {
         if (option) {
             setEmployeeEmploymetTypeId(option.key.toString());
@@ -234,7 +228,7 @@ const EmployeeEditComponent: FC<Props> = (props: Props) => {
                     label="Дата рождения"
                     value={employeeBirthDate}
                     firstDayOfWeek={DayOfWeek.Monday}
-                    formatDate={(date?) => date!.toLocaleDateString()}
+                    formatDate={(date?) => date.toLocaleDateString()}
                     onSelectDate={_onChangeBirthDate}
                     allowTextInput={true}
                     parseDateFromString={string => getDateFromLocaleString(string)}
@@ -265,7 +259,7 @@ const EmployeeEditComponent: FC<Props> = (props: Props) => {
                 <DatePicker
                     label="Дата устройства"
                     firstDayOfWeek={DayOfWeek.Monday}
-                    formatDate={(date?) => date!.toLocaleDateString()}
+                    formatDate={(date?) => date.toLocaleDateString()}
                     value={employeeEmployedDate}
                     onSelectDate={_onChangeEmployedDate}
                     allowTextInput={true}
@@ -277,7 +271,7 @@ const EmployeeEditComponent: FC<Props> = (props: Props) => {
                     label="Дата увольнения"
                     disabled={!employeeLeave}
                     firstDayOfWeek={DayOfWeek.Monday}
-                    formatDate={(date?) => date!.toLocaleDateString()}
+                    formatDate={(date?) => date.toLocaleDateString()}
                     value={employeeLeaveDate || getNextDate(new Date())}
                     onSelectDate={_onChangeLeaveDate}
                     allowTextInput={true}

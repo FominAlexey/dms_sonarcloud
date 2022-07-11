@@ -15,7 +15,6 @@ const FeedbackEditComponent: FC<Props> = (props: Props) => {
     const [isValidMessage, setIsValidMessage] = useState(false);
 
     const _onFeedbackMessageChanged = (
-        event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
         newValue?: string | undefined,
     ) => {
         setFeedbackMessage(newValue);
@@ -28,7 +27,7 @@ const FeedbackEditComponent: FC<Props> = (props: Props) => {
     };
 
     const _onSave = () => {
-        props.sendFeedback(feedbackMessage!.trim());
+        props.sendFeedback(feedbackMessage.trim());
     };
 
     const _onCloseDialog = () => {

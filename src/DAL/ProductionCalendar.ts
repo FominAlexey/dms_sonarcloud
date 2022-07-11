@@ -50,7 +50,7 @@ const ProductionCalendarProperties: IProductionCalendarProperties = {
 };
 
 export const getProductionCalendar = async (): Promise<any> => {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
         ProductionCalendarProperties.api = new IsDayOffAPI();
         ProductionCalendarProperties.monthsOfTheYear = Object.keys(productionCalendar);
         ProductionCalendarProperties.valueYear = new Date().getFullYear();
@@ -74,7 +74,6 @@ export const getProductionCalendar = async (): Promise<any> => {
         }
         resolve(new Array(productionCalendar));
     });
-    // return axios(SERVER_URL + 'govrucalendar', generateFetchConfigAxios('GET'));
 };
 
 // Returns array of nums unworking days for a month

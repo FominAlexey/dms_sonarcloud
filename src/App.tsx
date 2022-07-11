@@ -27,7 +27,6 @@ import ProductionCalendarContainer from './containers/Content/ProductionCalendar
 import { initializeIcons } from '@uifabric/icons';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
-//import { configureStore } from './store/Store';
 import PrivateRoute from './PrivateRoute';
 import UsersLimitsReportContainer from './containers/Reports/UsersLimitsReport/UsersLimitsReportContainer';
 import UserProfileConatiner from './containers/Content/UserProfile/UserProfileContainer';
@@ -38,8 +37,6 @@ import versionDMS from 'src/version.json';
 
 import './styles/shared.css';
 import ResetPasswordContainer from './containers/Content/ResetPassword/ResetPasswordContainer';
-
-//const store = configureStore();
 
 initializeIcons();
 

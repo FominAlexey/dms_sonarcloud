@@ -22,17 +22,6 @@ function configAxios() {
 }
 
 export default {
-    // setHeader(responseType?: responseTypes) {
-    //     Axios.defaults.headers = {
-    //         'Content-Type': 'application/json',
-    //         'Authorization': 'Basic ' + CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(getEmail() + ":" + getPassword()))
-    //     };
-
-    //     Axios.defaults.auth = { username: getEmail(), password: getPassword() };
-
-    //     if(responseType)
-    //         Axios.defaults.responseType = responseType;
-    // },
 
     get(url: string, responseType?: responseTypes): Promise<AxiosResponse> {
         configAxios();

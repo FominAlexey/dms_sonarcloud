@@ -36,13 +36,13 @@ const ExpenseCategoryEditComponent: FC<Props> = (props: Props) => {
     const _onSave = () => {
         const newExpenseCategory: ExpenseCategory = {
             id: props.expenseCategory.id,
-            title: expenseCategoryTitle!.trim(),
-            color: expenseCategoryColor!.trim().toUpperCase(),
+            title: expenseCategoryTitle.trim(),
+            color: expenseCategoryColor.trim().toUpperCase(),
         };
         props.saveExpenseCategory(newExpenseCategory);
     };
 
-    const _onChangeTitle = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
+    const _onChangeTitle = (newValue?: string) => {
         setExpenseCategoryTitle(newValue);
         if (newValue) {
             setValidation({ ...validation, isValidTitle: newValue.trim().length !== 0 });
@@ -51,7 +51,7 @@ const ExpenseCategoryEditComponent: FC<Props> = (props: Props) => {
         }
     };
 
-    const _onChangeColorPicker = (event: React.SyntheticEvent<HTMLElement>, color: IColor) => {
+    const _onChangeColorPicker = (color: IColor) => {
         setExpenseCategoryColor(color.str);
 
         if (!validation.isValidColor) setValidation({ ...validation, isValidColor: true });

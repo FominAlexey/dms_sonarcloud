@@ -2,9 +2,12 @@ import { Employee } from 'src/DAL/Employees';
 import { TimeTracking } from 'src/DAL/TimeTracking';
 import { ISearchProps, ActionAsyncThunk } from 'src/shared/Common';
 import { getEmployeesAsyncThunk } from 'src/store/slice/employeesSlice';
-import { getFileReportTimeTrackingAsyncThunk } from 'src/store/slice/timeTrackingsSlice';
+import {
+    getFileReportTimeTrackingAsyncThunk,
+    getTimeTrackingsAsyncThunk,
+    GetTimeTrackingsInfoType
+} from 'src/store/slice/timeTrackingsSlice';
 import { AppState } from 'src/store/slice';
-import { getTimeTrackingsAsyncThunk, GetTimeTrackingsInfoType } from 'src/store/slice/timeTrackingsSlice';
 
 export interface ITimeReportOverviewProps {
     employees: Employee[] | null;

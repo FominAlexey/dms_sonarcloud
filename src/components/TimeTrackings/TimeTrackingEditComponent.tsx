@@ -105,10 +105,7 @@ const TimeTrackingEditComponent: FC<Props> = (props: Props) => {
     };
 
     const _onChangeProject = (
-        event: React.FormEvent<IComboBox>,
         option?: IComboBoxOption,
-        index?: number,
-        value?: string,
     ): void => {
         if (option) {
             setTimeTrackingProjectId(option.key.toString());
@@ -117,10 +114,7 @@ const TimeTrackingEditComponent: FC<Props> = (props: Props) => {
     };
 
     const _onChangeTaskCategory = (
-        event: React.FormEvent<IComboBox>,
         option?: IComboBoxOption,
-        index?: number,
-        value?: string,
     ): void => {
         if (option) {
             setTimeTrackingTaskCategoryId(option.key.toString());
@@ -132,7 +126,7 @@ const TimeTrackingEditComponent: FC<Props> = (props: Props) => {
         date ? setTimeTrackingStartDate(date) : setTimeTrackingStartDate(new Date());
     };
 
-    const _onChangeTimeSpent = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
+    const _onChangeTimeSpent = (newValue?: string) => {
         setTimeTrackingTimeSpent(Number.parseInt(newValue!) || 0);
         setValidation({ ...validation, isValidTimeSpent: newValue?.toString() !== '0' });
     };
@@ -144,7 +138,6 @@ const TimeTrackingEditComponent: FC<Props> = (props: Props) => {
     };
 
     const _onChangeBillable = (
-        billable?: FormEvent<HTMLInputElement | HTMLElement> | undefined,
         checked?: boolean | undefined,
     ) => {
         if (!checked) {
@@ -155,7 +148,6 @@ const TimeTrackingEditComponent: FC<Props> = (props: Props) => {
     };
 
     const _onChangeTaskIsDone = (
-        TaskIsDone?: FormEvent<HTMLInputElement | HTMLElement> | undefined,
         checked?: boolean | undefined,
     ) => {
         if (!checked) {
@@ -165,7 +157,7 @@ const TimeTrackingEditComponent: FC<Props> = (props: Props) => {
         }
     };
 
-    const _onChangeTaskNumber = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
+    const _onChangeTaskNumber = (newValue?: string) => {
         if (newValue) {
             setTaskNumber(newValue);
         } else {
@@ -173,7 +165,7 @@ const TimeTrackingEditComponent: FC<Props> = (props: Props) => {
         }
     };
 
-    const _onChangeTaskName = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
+    const _onChangeTaskName = (newValue?: string) => {
         if (newValue) {
             setTaskName(newValue);
             setValidation({ ...validation, isValidTaskName: true });
@@ -184,7 +176,6 @@ const TimeTrackingEditComponent: FC<Props> = (props: Props) => {
     };
 
     const _onChangeTaskDescription = (
-        event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
         newValue?: string,
     ) => {
         if (newValue) {
@@ -260,7 +251,7 @@ const TimeTrackingEditComponent: FC<Props> = (props: Props) => {
                     label="Дата"
                     firstDayOfWeek={DayOfWeek.Monday}
                     value={timeTrackingStartDate}
-                    formatDate={(date?) => date!.toLocaleDateString()}
+                    formatDate={(date?) => date.toLocaleDateString()}
                     onSelectDate={_onChangeStartDate}
                     allowTextInput={true}
                     parseDateFromString={string => getDateFromLocaleString(string)}
