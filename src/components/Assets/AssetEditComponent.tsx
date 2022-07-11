@@ -11,11 +11,10 @@ import {
 } from '@fluentui/react';
 import { AssetEdit } from 'src/DAL/Assets';
 import { Employee } from 'src/DAL/Employees';
-import { toUTC } from 'src/shared/DateUtils';
+import { toUTC, DAY_PICKER_STRINGS } from 'src/shared/DateUtils';
 import { requiredMessage, zeroGuid } from 'src/shared/Constants';
 import { verticalGapStackTokens } from 'src/shared/Styles';
 import EditDialog from 'src/components/EditDialog';
-import { DAY_PICKER_STRINGS } from 'src/shared/DateUtils';
 
 interface Props {
     asset: AssetEdit;
@@ -81,7 +80,7 @@ const AssetEditComponent: FC<Props> = (props: Props) => {
         props.saveAsset(newAsset);
     };
 
-    const _onChangeTitle = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
+    const _onChangeTitle = (newValue?: string) => {
         setAssetTitle(newValue);
         if (newValue) {
             setValidation({ ...validation, isValidTitle: newValue?.trim().length !== 0 });
@@ -90,15 +89,13 @@ const AssetEditComponent: FC<Props> = (props: Props) => {
         }
     };
 
-    const _onChangeDescription = (
-        event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
+    const _onChangeDescription = (        
         newValue?: string,
     ) => {
         setAssetDescription(newValue);
     };
 
     const _onChangeSerialNumber = (
-        event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
         newValue?: string,
     ) => {
         setAssetSerialNumber(newValue);
@@ -109,7 +106,6 @@ const AssetEditComponent: FC<Props> = (props: Props) => {
     };
 
     const _onChangeAssetReceived = (
-        event?: React.FormEvent<HTMLInputElement | HTMLElement> | undefined,
         checked?: boolean | undefined,
     ) => {
         if (!checked) {
@@ -122,13 +118,9 @@ const AssetEditComponent: FC<Props> = (props: Props) => {
     };
 
     const _onChangeAssetEmployee = (
-        event: React.FormEvent<IComboBox>,
         option?: IComboBoxOption,
-        index?: number,
-        value?: string,
     ): void => {
         if (option) {
-            //setAssetEmployeeId(Number.parseInt(option.key.toString()));
             setAssetEmployeeId(option.key.toString());
             setValidation({ ...validation, isValidEmployee: true });
         }
@@ -168,7 +160,7 @@ const AssetEditComponent: FC<Props> = (props: Props) => {
                     disabled={!assetReceived}
                     label="Дата возврата"
                     firstDayOfWeek={DayOfWeek.Monday}
-                    formatDate={(date?) => date!.toLocaleDateString()}
+                    formatDate={(date?) => date.toLocaleDateString()}
                     value={assetReceiveDate || new Date()}
                     onSelectDate={_onChangeReceiveDate}
                     strings={DAY_PICKER_STRINGS}

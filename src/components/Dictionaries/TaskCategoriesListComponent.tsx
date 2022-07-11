@@ -1,7 +1,6 @@
-import React, { FC } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { TaskCategory, TaskCategoryEdit } from 'src/DAL/Dictionaries';
 import { ActionAsyncThunk } from 'src/shared/Common';
-import { useState, useEffect } from 'react';
 import { IColumn, IconButton } from '@fluentui/react';
 import { ShimmeredDetailsList } from '@fluentui/react/lib/ShimmeredDetailsList';
 

@@ -3,10 +3,9 @@ import { Stack, TextField, ComboBox, IComboBoxOption, IComboBox, DatePicker, Day
 import { ExpenseEdit, Currencies, PaymentMethods } from 'src/DAL/Expenses';
 import { ExpenseCategory } from 'src/DAL/Dictionaries';
 import { toUTC, getDateFromLocaleString, DAY_PICKER_STRINGS } from 'src/shared/DateUtils';
-import { requiredMessage, zeroGuid } from 'src/shared/Constants';
+import { requiredMessage, zeroGuid, CREATED } from 'src/shared/Constants';
 import { verticalGapStackTokens } from 'src/shared/Styles';
 import EditDialog from 'src/components/EditDialog';
-import { CREATED } from 'src/shared/Constants';
 import { ExpenseInfoType } from 'src/store/slice/expensesSlice';
 import { ActionAsyncThunk } from 'src/shared/Common';
 
@@ -84,7 +83,7 @@ const ExpenseEditComponent: FC<Props> = (props: Props) => {
             id: props.expense.id,
             employeeId: props.userId,
             expenseCategoryId: expenseCategoryId,
-            description: expenseDescription!.trim(),
+            description: expenseDescription.trim(),
             documentId: expenseDocumentId,
             amount: expenseAmount,
             transactionDate: toUTC(expenseTransactionDate),
@@ -98,10 +97,7 @@ const ExpenseEditComponent: FC<Props> = (props: Props) => {
     };
 
     const _onChangeCategory = (
-        event: React.FormEvent<IComboBox>,
         option?: IComboBoxOption,
-        index?: number,
-        value?: string,
     ): void => {
         if (option) {
             setExpenseCategoryId(option.key.toString());
@@ -110,7 +106,6 @@ const ExpenseEditComponent: FC<Props> = (props: Props) => {
     };
 
     const _onChangeDescription = (
-        event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
         newValue?: string,
     ) => {
         setExpenseDescription(newValue);
@@ -121,7 +116,7 @@ const ExpenseEditComponent: FC<Props> = (props: Props) => {
         }
     };
 
-    const _onChangeAmount = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
+    const _onChangeAmount = (newValue?: string) => {
         setExpenseAmountString(newValue);
         if (newValue) {
             const newAmount = Number.parseFloat(newValue);
@@ -146,10 +141,7 @@ const ExpenseEditComponent: FC<Props> = (props: Props) => {
     };
 
     const _onChangeCurrency = (
-        event: React.FormEvent<IComboBox>,
         option?: IComboBoxOption,
-        index?: number,
-        value?: string,
     ): void => {
         if (option) {
             setExpenseCurrencyId(option.key.toString());
@@ -157,10 +149,7 @@ const ExpenseEditComponent: FC<Props> = (props: Props) => {
     };
 
     const _onChangePaymentMethod = (
-        event: React.FormEvent<IComboBox>,
         option?: IComboBoxOption,
-        index?: number,
-        value?: string,
     ): void => {
         if (option) {
             setExpensePaymentMethodId(option.key.toString());
@@ -216,7 +205,7 @@ const ExpenseEditComponent: FC<Props> = (props: Props) => {
                 <DatePicker
                     label="Дата совершения"
                     firstDayOfWeek={DayOfWeek.Monday}
-                    formatDate={(date?) => date!.toLocaleDateString()}
+                    formatDate={(date?) => date.toLocaleDateString()}
                     value={expenseTransactionDate}
                     onSelectDate={_onChangeTransactionDate}
                     allowTextInput={true}

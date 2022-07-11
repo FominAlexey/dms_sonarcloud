@@ -40,19 +40,19 @@ const LoginFormComponent: FC<Props> = (props: Props) => {
         }
     }, [props.hasCredentials, history]);
 
-    const _onChangeUsername = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
+    const _onChangeUsername = (newValue?: string) => {
         setUsername(newValue);
         setValidation({ ...validation, isValidUsername: newValue?.length !== 0 });
     };
 
-    const _onChangePassword = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
+    const _onChangePassword = (newValue?: string) => {
         setPassword(newValue);
         setValidation({ ...validation, isValidPassword: newValue?.length !== 0 });
     };
 
     const _onSubmit = () => {
         if (validation.isValidUsername && validation.isValidPassword) {
-            props.login(username!.trim(), password!);
+            props.login(username.trim(), password);
             setShowValidationError(false);
         } else {
             setShowValidationError(true);

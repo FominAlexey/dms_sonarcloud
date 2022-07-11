@@ -137,7 +137,6 @@ export const getDateFromLocaleString = (dateString: string) => {
 
 // Return count of days between two dates
 export const getDaysCount = (startDate: Date, endDate: Date | null) => {
-    //return endDate ? moment(endDate.toJSON()).diff(moment(startDate.toJSON()), 'days', true) : 1
     const oneDay = 24 * 60 * 60 * 1000;
     return endDate ? Math.round(Math.abs((endDate.getTime() - startDate.getTime()) / oneDay) + 1) : 1;
 };

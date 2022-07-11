@@ -41,14 +41,14 @@ const EventLogCategoryEditComponent: FC<Props> = (props: Props) => {
     const _onSave = () => {
         const newEventLogCategory: EventLogCategory = {
             id: props.eventLogCategory.id,
-            title: eventLogCategoryTitle!.trim(),
-            color: eventLogCategoryColor!.trim().toUpperCase(),
+            title: eventLogCategoryTitle.trim(),
+            color: eventLogCategoryColor.trim().toUpperCase(),
             limit: eventLogCategoryLimit,
         };
         props.saveEventLogCategory(newEventLogCategory);
     };
 
-    const _onChangeTitle = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
+    const _onChangeTitle = (newValue?: string) => {
         setEventLogCategoryTitle(newValue);
         if (newValue) {
             setValidation({ ...validation, isValidTitle: newValue.trim().length !== 0 });
@@ -57,7 +57,7 @@ const EventLogCategoryEditComponent: FC<Props> = (props: Props) => {
         }
     };
 
-    const _onchangeLimit = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
+    const _onchangeLimit = (newValue?: string) => {
         if (newValue) {
             setEventLogCategoryLimit(Number.parseInt(newValue));
         } else {
@@ -71,7 +71,7 @@ const EventLogCategoryEditComponent: FC<Props> = (props: Props) => {
         }
     };
 
-    const _onChangeColorPicker = (event: React.SyntheticEvent<HTMLElement>, color: IColor) => {
+    const _onChangeColorPicker = (color: IColor) => {
         setEventLogCategoryColor(color.str);
 
         if (!validation.isValidColor) setValidation({ ...validation, isValidColor: true });

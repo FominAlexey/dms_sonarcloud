@@ -44,8 +44,6 @@ const reportTypesOptions: IComboBoxOption[] = [
 const SelectReportDialogComponent = () => {
     const history = useHistory();
 
-    // console.log(getEndOfMonth(new Date()));
-
     const [reportType, setReportType] = useState<string | number | undefined>();
     const [startDate, setStartDate] = useState<Date>(getStartOfMonth(new Date()));
     const [endDate, setEndDate] = useState<Date>(getEndOfMonth(new Date()));
@@ -56,10 +54,7 @@ const SelectReportDialogComponent = () => {
     });
 
     const _onChangeReportType = (
-        event: React.FormEvent<IComboBox>,
         option?: IComboBoxOption,
-        index?: number,
-        value?: string,
     ): void => {
         setReportType(option?.key);
         setValidation({ ...validation, isValidReportType: option !== null });
@@ -135,7 +130,7 @@ const SelectReportDialogComponent = () => {
                 <DatePicker
                     label="С"
                     firstDayOfWeek={DayOfWeek.Monday}
-                    formatDate={(date?) => date!.toLocaleDateString()}
+                    formatDate={(date?) => date.toLocaleDateString()}
                     value={startDate || new Date()}
                     onSelectDate={_onChangeStartDate}
                     allowTextInput={true}
@@ -147,7 +142,7 @@ const SelectReportDialogComponent = () => {
                 <DatePicker
                     label="По"
                     firstDayOfWeek={DayOfWeek.Monday}
-                    formatDate={(date?) => date!.toLocaleDateString()}
+                    formatDate={(date?) => date.toLocaleDateString()}
                     value={endDate || new Date()}
                     onSelectDate={_onChangeEndDate}
                     allowTextInput={true}

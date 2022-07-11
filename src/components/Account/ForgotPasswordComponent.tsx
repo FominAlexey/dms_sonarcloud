@@ -14,7 +14,7 @@ const ForgotPasswordComponent: FC<Props> = (props: Props) => {
 
     const [validation, setValidation] = useState<boolean>(email ? EmailReg.test(email) : false);
 
-    const _onChangeEmail = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
+    const _onChangeEmail = (newValue?: string) => {
         setEmail(newValue);
 
         if (newValue) {

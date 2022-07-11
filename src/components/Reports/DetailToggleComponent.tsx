@@ -10,7 +10,7 @@ interface Props {
 const DetailToggleComponent: FC<Props> = ({ isDetail }: Props) => {
     const history = useHistory();
 
-    const _onToggleChanged = (event: React.MouseEvent<HTMLElement, MouseEvent>, checked?: boolean | undefined) => {
+    const _onToggleChanged = (checked?: boolean | undefined) => {
         const queryParams = queryString.parse(history.location.search);
         queryParams.isDetail = checked ? 'true' : 'false';
         history.push(history.location.pathname + '?' + queryString.stringify(queryParams));

@@ -48,7 +48,7 @@ const SelectPeriodComponent: FC<Props> = (props: Props) => {
                 <DatePicker
                     label="С"
                     firstDayOfWeek={DayOfWeek.Monday}
-                    formatDate={(date?) => date!.toLocaleDateString()}
+                    formatDate={(date?) => date.toLocaleDateString()}
                     value={props.fromDate}
                     onSelectDate={_onChangeStartDate}
                     allowTextInput={true}
@@ -59,7 +59,7 @@ const SelectPeriodComponent: FC<Props> = (props: Props) => {
                 <DatePicker
                     label="По"
                     firstDayOfWeek={DayOfWeek.Monday}
-                    formatDate={(date?) => date!.toLocaleDateString()}
+                    formatDate={(date?) => date.toLocaleDateString()}
                     value={props.toDate}
                     onSelectDate={_onChangeEndDate}
                     className="ml-20"

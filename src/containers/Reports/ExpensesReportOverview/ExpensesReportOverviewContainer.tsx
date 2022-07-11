@@ -50,13 +50,9 @@ const ExpensesReportOverviewContainer: FC<IExpensesReportOverviewProps> = (props
     }, [props.employees]);
 
     const _onChangeCurrentEmployee = (
-        event: React.FormEvent<IComboBox>,
         option?: IComboBoxOption,
-        index?: number,
-        value?: string,
     ): void => {
         if (option) {
-            //setCurrentEmployeeId(Number.parseInt(option.key.toString()));
             setCurrentEmployeeId(option.key.toString());
         }
     };
