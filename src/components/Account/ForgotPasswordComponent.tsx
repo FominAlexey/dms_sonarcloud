@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, FormEvent, useState } from 'react';
 import { Dialog, DialogType, DialogFooter, Stack, DefaultButton, PrimaryButton, TextField } from '@fluentui/react';
 import { verticalGapStackTokens } from 'src/shared/Styles';
 import { ActionAsyncThunk } from 'src/shared/Common';
@@ -14,7 +14,7 @@ const ForgotPasswordComponent: FC<Props> = (props: Props) => {
 
     const [validation, setValidation] = useState<boolean>(email ? EmailReg.test(email) : false);
 
-    const _onChangeEmail = (newValue?: string) => {
+    const _onChangeEmail = (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
         setEmail(newValue);
 
         if (newValue) {

@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from 'react';
 
-import { Label, PrimaryButton, DefaultButton } from '@fluentui/react';
+import { Label, PrimaryButton } from '@fluentui/react';
 
 import ContentContainer from 'src/containers/ContentContainer/ContentContainer';
 import TimeTrackingsListComponent from 'src/components/TimeTrackings/TimeTrackingsListComponent';
@@ -25,6 +25,7 @@ const TimeTrackingContainer: FC<ITimeTrackingProps> = (props: ITimeTrackingProps
             workTaskId: null,
             fromDate: getStartOfWeek(currentDate),
             toDate: getEndOfWeek(currentDate),
+            billable: undefined,
         });
     }, [props.searchProps, props.userId, props.needToUpdateTimeTrackings]);
 

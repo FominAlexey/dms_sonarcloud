@@ -1,13 +1,13 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, FormEvent, useEffect, useState } from 'react';
 import {
     Stack,
     TextField,
     Checkbox,
     IComboBoxOption,
-    IComboBox,
     DatePicker,
     DayOfWeek,
     ComboBox,
+    IComboBox,
 } from '@fluentui/react';
 import { AssetEdit } from 'src/DAL/Assets';
 import { Employee } from 'src/DAL/Employees';
@@ -24,7 +24,7 @@ interface Props {
     clearAsset: () => void;
 }
 
-interface validationState {
+interface ValidationState {
     isValidTitle: boolean;
     isValidEmployee: boolean;
 }
@@ -40,7 +40,7 @@ const AssetEditComponent: FC<Props> = (props: Props) => {
 
     const [EmployeesOptions, setEmployeesOptions] = useState<IComboBoxOption[]>();
 
-    const [validation, setValidation] = useState<validationState>({
+    const [validation, setValidation] = useState<ValidationState>({
         isValidTitle: props.asset.title !== undefined,
         isValidEmployee: props.asset.employeeId !== zeroGuid,
     });
@@ -80,7 +80,7 @@ const AssetEditComponent: FC<Props> = (props: Props) => {
         props.saveAsset(newAsset);
     };
 
-    const _onChangeTitle = (newValue?: string) => {
+    const _onChangeTitle = (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
         setAssetTitle(newValue);
         if (newValue) {
             setValidation({ ...validation, isValidTitle: newValue?.trim().length !== 0 });
@@ -89,15 +89,13 @@ const AssetEditComponent: FC<Props> = (props: Props) => {
         }
     };
 
-    const _onChangeDescription = (        
+    const _onChangeDescription = (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>,        
         newValue?: string,
     ) => {
         setAssetDescription(newValue);
     };
 
-    const _onChangeSerialNumber = (
-        newValue?: string,
-    ) => {
+    const _onChangeSerialNumber = (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
         setAssetSerialNumber(newValue);
     };
 
@@ -106,6 +104,7 @@ const AssetEditComponent: FC<Props> = (props: Props) => {
     };
 
     const _onChangeAssetReceived = (
+        ev?: FormEvent<HTMLInputElement | HTMLElement> | undefined,
         checked?: boolean | undefined,
     ) => {
         if (!checked) {
@@ -117,9 +116,7 @@ const AssetEditComponent: FC<Props> = (props: Props) => {
         }
     };
 
-    const _onChangeAssetEmployee = (
-        option?: IComboBoxOption,
-    ): void => {
+    const _onChangeAssetEmployee = (event: FormEvent<IComboBox>, option?: IComboBoxOption): void => {
         if (option) {
             setAssetEmployeeId(option.key.toString());
             setValidation({ ...validation, isValidEmployee: true });
@@ -160,7 +157,7 @@ const AssetEditComponent: FC<Props> = (props: Props) => {
                     disabled={!assetReceived}
                     label="Дата возврата"
                     firstDayOfWeek={DayOfWeek.Monday}
-                    formatDate={(date?) => date.toLocaleDateString()}
+                    formatDate={(date?) => date!.toLocaleDateString()}
                     value={assetReceiveDate || new Date()}
                     onSelectDate={_onChangeReceiveDate}
                     strings={DAY_PICKER_STRINGS}

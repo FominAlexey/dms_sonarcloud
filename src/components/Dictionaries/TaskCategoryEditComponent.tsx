@@ -1,4 +1,4 @@
-import React, { useState, FC } from 'react';
+import React, { useState, FC, FormEvent } from 'react';
 import { TaskCategoryEdit } from 'src/DAL/Dictionaries';
 import EditDialog from 'src/components/EditDialog';
 import { Stack, TextField } from '@fluentui/react';
@@ -25,7 +25,7 @@ const TaskCategoryEditComponent: FC<Props> = (props: Props) => {
         props.clearTaskCategory();
     };
 
-    const _onCahngeName = (newValue?: string) => {
+    const _onCahngeName = (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
         setTaskCategoryName(newValue);
 
         if (newValue) {

@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, FormEvent, useEffect, useState } from 'react';
 import {
     Stack,
     TextField,
@@ -26,7 +26,7 @@ interface Props {
     posting: boolean;
 }
 
-interface validationState {
+interface ValidationState {
     isValidEventCategoryId: boolean;
     isValidReason: boolean;
     isValidDates: boolean;
@@ -42,7 +42,7 @@ const EventLogEditComponent: FC<Props> = (props: Props) => {
 
     const [EventCategoriesOptions, setEventCategoriesOptions] = useState<IComboBoxOption[]>();
 
-    const [validation, setValidation] = useState<validationState>({
+    const [validation, setValidation] = useState<ValidationState>({
         isValidEventCategoryId: props.eventLog.eventCategoryId !== '',
         isValidReason: props.eventLog.reason ? props.eventLog.reason.trim().length !== 0 : false,
         isValidDates: props.eventLog.endDate
@@ -72,7 +72,7 @@ const EventLogEditComponent: FC<Props> = (props: Props) => {
             id: props.eventLog.id,
             employeeId: props.userId,
             eventCategoryId: eventLogCategoryId,
-            reason: eventLogReason.trim(),
+            reason: eventLogReason!.trim(),
             startDate: toUTC(eventLogStartDate),
             endDate: eventLogHasEndDate && eventLogEndDate ? toUTC(eventLogEndDate) : null,
             approvalStatusId: CREATED,
@@ -82,7 +82,7 @@ const EventLogEditComponent: FC<Props> = (props: Props) => {
         props.saveEventLog(newEventLog);
     };
 
-    const _onChangeCategory = (
+    const _onChangeCategory = (event: FormEvent<IComboBox>,
         option?: IComboBoxOption,
     ): void => {
         if (option) {
@@ -91,7 +91,7 @@ const EventLogEditComponent: FC<Props> = (props: Props) => {
         }
     };
 
-    const _onChangeReason = (newValue?: string) => {
+    const _onChangeReason = (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
         setEventLogReason(newValue);
         if (newValue) {
             setValidation({ ...validation, isValidReason: newValue.trim().length !== 0 });
@@ -102,7 +102,7 @@ const EventLogEditComponent: FC<Props> = (props: Props) => {
 
     const _onChangeStartDate = (date: Date | null | undefined) => {
         date ? setEventLogStartDate(date) : setEventLogStartDate(new Date());
-        if (eventLogHasEndDate) setValidation({ ...validation, isValidDates: toUTC(date!) < toUTC(eventLogEndDate) });
+        if (eventLogHasEndDate) setValidation({ ...validation, isValidDates: toUTC(date!) < toUTC(eventLogEndDate!) });
     };
 
     const _onChangeEndDate = (date: Date | null | undefined) => {
@@ -111,6 +111,7 @@ const EventLogEditComponent: FC<Props> = (props: Props) => {
     };
 
     const _onChangeHasEndDate = (
+        ev?: FormEvent<HTMLInputElement | HTMLElement> | undefined,
         checked?: boolean | undefined,
     ) => {
         setEventLogEndDate(new Date());
@@ -154,7 +155,7 @@ const EventLogEditComponent: FC<Props> = (props: Props) => {
                 <DatePicker
                     label="Дата начала"
                     firstDayOfWeek={DayOfWeek.Monday}
-                    formatDate={(date?) => date.toLocaleDateString()}
+                    formatDate={(date?) => date!.toLocaleDateString()}
                     value={eventLogStartDate}
                     onSelectDate={_onChangeStartDate}
                     allowTextInput={true}
@@ -165,7 +166,7 @@ const EventLogEditComponent: FC<Props> = (props: Props) => {
                     label="Дата окончания"
                     disabled={!eventLogHasEndDate}
                     firstDayOfWeek={DayOfWeek.Monday}
-                    formatDate={(date?) => date.toLocaleDateString()}
+                    formatDate={(date?) => date!.toLocaleDateString()}
                     value={eventLogEndDate || new Date()}
                     onSelectDate={_onChangeEndDate}
                     allowTextInput={true}

@@ -1,6 +1,6 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, FormEvent, useEffect, useState } from 'react';
 
-import { ComboBox, IComboBoxOption, IComboBox, Label } from '@fluentui/react';
+import { ComboBox, IComboBox, IComboBoxOption, Label } from '@fluentui/react';
 
 import EventLogsOverviewReportComponent from 'src/components/Reports/EventLogsOverviewReportComponent';
 import EventLogsDetailsReportComponent from 'src/components/Reports/EventLogsDetailsReportComponent';
@@ -62,7 +62,10 @@ const EventLogsReportOverviewContainer: FC<IEventLogsReportOverviewProps> = (pro
     }, [props.employees]);
 
     const _onChangeCurrentEmployee = (
-        option?: IComboBoxOption,
+        event: FormEvent<IComboBox>,
+        option?: IComboBoxOption | undefined,
+        index?: number | undefined,
+        value?: string | undefined,
     ): void => {
         if (option) {
             setCurrentEmployeeId(option.key.toString());

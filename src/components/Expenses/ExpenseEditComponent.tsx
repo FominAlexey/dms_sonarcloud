@@ -1,5 +1,5 @@
-import React, { FC, useState, useEffect } from 'react';
-import { Stack, TextField, ComboBox, IComboBoxOption, IComboBox, DatePicker, DayOfWeek, Label } from '@fluentui/react';
+import React, { FC, useState, useEffect, FormEvent } from 'react';
+import { Stack, TextField, ComboBox, IComboBoxOption, DatePicker, DayOfWeek, Label, IComboBox } from '@fluentui/react';
 import { ExpenseEdit, Currencies, PaymentMethods } from 'src/DAL/Expenses';
 import { ExpenseCategory } from 'src/DAL/Dictionaries';
 import { toUTC, getDateFromLocaleString, DAY_PICKER_STRINGS } from 'src/shared/DateUtils';
@@ -18,7 +18,7 @@ interface Props {
     clearExpense: () => void;
 }
 
-interface validationState {
+interface ValidationState {
     isValidExpenseCategoryId: boolean;
     isValidDocument: boolean;
     isValidDescription: boolean;
@@ -56,7 +56,7 @@ const ExpenseEditComponent: FC<Props> = (props: Props) => {
         };
     });
 
-    const [validation, setValidation] = useState<validationState>({
+    const [validation, setValidation] = useState<ValidationState>({
         isValidExpenseCategoryId: props.expense.expenseCategoryId !== zeroGuid,
         isValidDocument: true,
         isValidDescription: props.expense.description ? props.expense.description.trim().length !== 0 : false,
@@ -83,7 +83,7 @@ const ExpenseEditComponent: FC<Props> = (props: Props) => {
             id: props.expense.id,
             employeeId: props.userId,
             expenseCategoryId: expenseCategoryId,
-            description: expenseDescription.trim(),
+            description: expenseDescription!.trim(),
             documentId: expenseDocumentId,
             amount: expenseAmount,
             transactionDate: toUTC(expenseTransactionDate),
@@ -97,7 +97,10 @@ const ExpenseEditComponent: FC<Props> = (props: Props) => {
     };
 
     const _onChangeCategory = (
-        option?: IComboBoxOption,
+        event: FormEvent<IComboBox>,
+        option?: IComboBoxOption | undefined,
+        index?: number | undefined,
+        value?: string | undefined,
     ): void => {
         if (option) {
             setExpenseCategoryId(option.key.toString());
@@ -105,9 +108,7 @@ const ExpenseEditComponent: FC<Props> = (props: Props) => {
         }
     };
 
-    const _onChangeDescription = (
-        newValue?: string,
-    ) => {
+    const _onChangeDescription = (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
         setExpenseDescription(newValue);
         if (newValue) {
             setValidation({ ...validation, isValidDescription: newValue.trim().length !== 0 });
@@ -116,7 +117,7 @@ const ExpenseEditComponent: FC<Props> = (props: Props) => {
         }
     };
 
-    const _onChangeAmount = (newValue?: string) => {
+    const _onChangeAmount = (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
         setExpenseAmountString(newValue);
         if (newValue) {
             const newAmount = Number.parseFloat(newValue);
@@ -141,7 +142,10 @@ const ExpenseEditComponent: FC<Props> = (props: Props) => {
     };
 
     const _onChangeCurrency = (
-        option?: IComboBoxOption,
+        event: FormEvent<IComboBox>,
+        option?: IComboBoxOption | undefined,
+        index?: number | undefined,
+        value?: string | undefined,
     ): void => {
         if (option) {
             setExpenseCurrencyId(option.key.toString());
@@ -149,7 +153,10 @@ const ExpenseEditComponent: FC<Props> = (props: Props) => {
     };
 
     const _onChangePaymentMethod = (
-        option?: IComboBoxOption,
+        event: FormEvent<IComboBox>,
+        option?: IComboBoxOption | undefined,
+        index?: number | undefined,
+        value?: string | undefined,
     ): void => {
         if (option) {
             setExpensePaymentMethodId(option.key.toString());
@@ -205,7 +212,7 @@ const ExpenseEditComponent: FC<Props> = (props: Props) => {
                 <DatePicker
                     label="Дата совершения"
                     firstDayOfWeek={DayOfWeek.Monday}
-                    formatDate={(date?) => date.toLocaleDateString()}
+                    formatDate={(date?) => date!.toLocaleDateString()}
                     value={expenseTransactionDate}
                     onSelectDate={_onChangeTransactionDate}
                     allowTextInput={true}

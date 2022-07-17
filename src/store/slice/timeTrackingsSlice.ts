@@ -53,18 +53,18 @@ export type GetTimeTrackingsInfoType = {
     workTaskId: string | null;
     fromDate: Date | null;
     toDate: Date | null;
-    billable: boolean | undefined;
+    billable?: boolean | undefined;
 };
 
 type AddingTimeTrackingsInfoType = {
     projectId?: string | null;
     taskCategoryId?: string | null;
     startDate?: Date | null;
-    billable: boolean | undefined;
+    billable?: boolean | undefined;
     taskNumber?: string | null;
     taskName?: string | null;
     taskDescription?: string | null;
-    taskIsDone: boolean | undefined;
+    taskIsDone?: boolean | undefined;
 };
 
 const isValidDates = async (timeTracking: TimeTrackingEdit): Promise<boolean> => {

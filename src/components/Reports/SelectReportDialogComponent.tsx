@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Stack, ComboBox, IComboBoxOption, IComboBox, DatePicker, DayOfWeek, PrimaryButton } from '@fluentui/react';
+import React, { FormEvent, useState } from 'react';
+import { Stack, ComboBox, IComboBoxOption, DatePicker, DayOfWeek, PrimaryButton, IComboBox } from '@fluentui/react';
 
 import { useHistory } from 'react-router-dom';
 
@@ -12,7 +12,7 @@ import {
     DAY_PICKER_STRINGS,
 } from 'src/shared/DateUtils';
 
-interface validationState {
+interface ValidationState {
     isValidReportType: boolean;
     isValidStartDate: boolean;
     isValidEndDate: boolean;
@@ -47,14 +47,17 @@ const SelectReportDialogComponent = () => {
     const [reportType, setReportType] = useState<string | number | undefined>();
     const [startDate, setStartDate] = useState<Date>(getStartOfMonth(new Date()));
     const [endDate, setEndDate] = useState<Date>(getEndOfMonth(new Date()));
-    const [validation, setValidation] = useState<validationState>({
+    const [validation, setValidation] = useState<ValidationState>({
         isValidReportType: false,
         isValidStartDate: true,
         isValidEndDate: true,
     });
 
     const _onChangeReportType = (
-        option?: IComboBoxOption,
+        event: FormEvent<IComboBox>,
+        option?: IComboBoxOption | undefined,
+        index?: number | undefined,
+        value?: string | undefined,
     ): void => {
         setReportType(option?.key);
         setValidation({ ...validation, isValidReportType: option !== null });
@@ -130,7 +133,7 @@ const SelectReportDialogComponent = () => {
                 <DatePicker
                     label="С"
                     firstDayOfWeek={DayOfWeek.Monday}
-                    formatDate={(date?) => date.toLocaleDateString()}
+                    formatDate={(date?) => date!.toLocaleDateString()}
                     value={startDate || new Date()}
                     onSelectDate={_onChangeStartDate}
                     allowTextInput={true}
@@ -142,7 +145,7 @@ const SelectReportDialogComponent = () => {
                 <DatePicker
                     label="По"
                     firstDayOfWeek={DayOfWeek.Monday}
-                    formatDate={(date?) => date.toLocaleDateString()}
+                    formatDate={(date?) => date!.toLocaleDateString()}
                     value={endDate || new Date()}
                     onSelectDate={_onChangeEndDate}
                     allowTextInput={true}

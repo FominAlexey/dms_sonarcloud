@@ -73,17 +73,14 @@ export interface ITimeTrackingProps {
 export const mapStateToProps = (store: AppState) => {
     return {
         userId: store.account.userId,
-
         projects: store.projects.projects,
         projectsLoading: store.projects.loading,
-
         timeTrackings: store.timeTrackings.timeTrackings,
         timeTrackingsLoading: store.timeTrackings.loading,
         currentTimeTracking: store.timeTrackings.current,
         isTimeTrackingAdding: store.timeTrackings.isAdding,
         isTimeTrackingEditing: store.timeTrackings.isEditing,
         timeTrackingsPosting: store.timeTrackings.posting,
-
         workTasks: store.workTasks.workTasks,
         workTasksLoading: store.workTasks.loading,
         currentWorkTask: store.workTasks.current,
