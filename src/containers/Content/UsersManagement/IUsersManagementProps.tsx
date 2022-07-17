@@ -1,4 +1,4 @@
-import { Employee, EmployeeEdit, Role } from 'src/DAL/Employees';
+import { Employee, EmployeeEdit} from 'src/DAL/Employees';
 
 import { AppState } from 'src/store/slice';
 import {

@@ -1,13 +1,13 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect, FormEvent } from 'react';
 import {
     Stack,
     TextField,
     ComboBox,
     IComboBoxOption,
-    IComboBox,
     DatePicker,
     DayOfWeek,
     Checkbox,
+    IComboBox,
 } from '@fluentui/react';
 import { Employee, EmployeeEdit, EmploymentTypes } from 'src/DAL/Employees';
 import { toUTC, getDateFromLocaleString, DAY_PICKER_STRINGS, getNextDate } from 'src/shared/DateUtils';
@@ -25,7 +25,7 @@ interface Props {
     clearEmployee: () => void;
 }
 
-interface validationState {
+interface ValidationState {
     isValidFullName: boolean;
     isValidEmail: boolean;
     isValidPhone: boolean;
@@ -60,7 +60,7 @@ const EmployeeEditComponent: FC<Props> = (props: Props) => {
         };
     });
 
-    const [validation, setValidation] = useState<validationState>({
+    const [validation, setValidation] = useState<ValidationState>({
         isValidFullName: props.employee.fullName ? props.employee.fullName.trim().length !== 0 : false,
         isValidEmail: props.employee.email ? EmailReg.test(props.employee.email) : false,
         isValidPhone: props.employee.phone ? PhoneReg.test(props.employee.phone) : false,
@@ -90,10 +90,10 @@ const EmployeeEditComponent: FC<Props> = (props: Props) => {
     const _onSave = () => {
         const newEmployee: EmployeeEdit = {
             id: props.employee.id,
-            fullName: employeeFullName.trim(),
+            fullName: employeeFullName!.trim(),
             birthDate: toUTC(employeeBirthDate),
-            email: employeeEmail.trim(),
-            phone: employeePhone.trim(),
+            email: employeeEmail!.trim(),
+            phone: employeePhone!.trim(),
             employedDate: toUTC(employeeEmployedDate),
             leaveDate: employeeLeave && employeeLeaveDate ? toUTC(employeeLeaveDate) : null,
             isLeave: employeeLeave,
@@ -106,7 +106,10 @@ const EmployeeEditComponent: FC<Props> = (props: Props) => {
     };
 
     const _onChangeManager = (
-        option?: IComboBoxOption,
+        event: FormEvent<IComboBox>,
+        option?: IComboBoxOption | undefined,
+        index?: number | undefined,
+        value?: string | undefined,
     ): void => {
         if (option) {
             setEmployeeManagerId(option.key.toString());
@@ -114,7 +117,7 @@ const EmployeeEditComponent: FC<Props> = (props: Props) => {
         }
     };
 
-    const _onChangeFullname = (newValue?: string) => {
+    const _onChangeFullname = (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
         setEmployeeFullname(newValue);
         if (newValue) {
             setValidation({ ...validation, isValidFullName: newValue.trim().length !== 0 });
@@ -123,7 +126,7 @@ const EmployeeEditComponent: FC<Props> = (props: Props) => {
         }
     };
 
-    const _onChangeEmail = (newValue?: string) => {
+    const _onChangeEmail = (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
         setEmployeeEmail(newValue);
         if (newValue) {
             if (EmailReg.test(newValue)) {
@@ -136,7 +139,7 @@ const EmployeeEditComponent: FC<Props> = (props: Props) => {
         }
     };
 
-    const _onChangePhone = (newValue?: string) => {
+    const _onChangePhone = (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
         setEmployeePhone(newValue);
         if (newValue) {
             if (PhoneReg.test(newValue)) {
@@ -165,6 +168,7 @@ const EmployeeEditComponent: FC<Props> = (props: Props) => {
     };
 
     const _onChangeLeave = (
+        ev?: FormEvent<HTMLInputElement | HTMLElement> | undefined,
         checked?: boolean | undefined,
     ) => {
         setEmployeeLeaveDate(getNextDate(new Date()));
@@ -178,7 +182,10 @@ const EmployeeEditComponent: FC<Props> = (props: Props) => {
     };
 
     const _onChangeEmploymenttype = (
-        option?: IComboBoxOption,
+        event: FormEvent<IComboBox>,
+        option?: IComboBoxOption | undefined,
+        index?: number | undefined,
+        value?: string | undefined,
     ): void => {
         if (option) {
             setEmployeeEmploymetTypeId(option.key.toString());
@@ -228,7 +235,7 @@ const EmployeeEditComponent: FC<Props> = (props: Props) => {
                     label="Дата рождения"
                     value={employeeBirthDate}
                     firstDayOfWeek={DayOfWeek.Monday}
-                    formatDate={(date?) => date.toLocaleDateString()}
+                    formatDate={(date?) => date!.toLocaleDateString()}
                     onSelectDate={_onChangeBirthDate}
                     allowTextInput={true}
                     parseDateFromString={string => getDateFromLocaleString(string)}
@@ -259,7 +266,7 @@ const EmployeeEditComponent: FC<Props> = (props: Props) => {
                 <DatePicker
                     label="Дата устройства"
                     firstDayOfWeek={DayOfWeek.Monday}
-                    formatDate={(date?) => date.toLocaleDateString()}
+                    formatDate={(date?) => date!.toLocaleDateString()}
                     value={employeeEmployedDate}
                     onSelectDate={_onChangeEmployedDate}
                     allowTextInput={true}
@@ -271,7 +278,7 @@ const EmployeeEditComponent: FC<Props> = (props: Props) => {
                     label="Дата увольнения"
                     disabled={!employeeLeave}
                     firstDayOfWeek={DayOfWeek.Monday}
-                    formatDate={(date?) => date.toLocaleDateString()}
+                    formatDate={(date?) => date!.toLocaleDateString()}
                     value={employeeLeaveDate || getNextDate(new Date())}
                     onSelectDate={_onChangeLeaveDate}
                     allowTextInput={true}

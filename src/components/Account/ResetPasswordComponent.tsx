@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, FormEvent, useState } from 'react';
 
 import { Stack, Image, ImageFit, Label, TextField, PrimaryButton } from '@fluentui/react';
 import { verticalGapStackTokens } from 'src/shared/Styles';
@@ -21,7 +21,7 @@ const ResetPasswordComponent: FC<Props> = (props: Props) => {
     const [password, setPassword] = useState<string | undefined>('');
     const [validation, setValidation] = useState<boolean>(password ? PasswordReg.test(password) : false);
 
-    const _onChangePassword = (newValue?: string) => {
+    const _onChangePassword = (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
         setPassword(newValue);
 
         if (newValue) {

@@ -76,7 +76,7 @@ const CalendarContainer: FC<ICalendarProps> = (props: ICalendarProps) => {
             <CalendarOverviewComponent
                 userId={props.userId}
                 currentDate={props.searchProps.fromDate || new Date()}
-                employees={displayEmployees?.filter(employee => employee.isLeave == false) || []}
+                employees={displayEmployees?.filter(employee => !employee.isLeave ) || []}
                 eventLogs={props.eventLogs?.filter(ev => ev.approvalStatusId !== REJECTED) || []}
                 eventLogCategories={props.eventLogCategories || []}
                 editingEventLog={props.editingEventLog}

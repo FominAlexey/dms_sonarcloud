@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, FormEvent, useState } from 'react';
 import { Stack, Checkbox, Label } from '@fluentui/react';
 import { EmployeeEdit, Role } from 'src/DAL/Employees';
 import EditDialog from 'src/components/EditDialog';
@@ -25,6 +25,7 @@ const UsersManagementEditComponent: FC<RolesProps> = (props: RolesProps) => {
     );
 
     const _onChangeIsEmployee = (
+        ev?: FormEvent<HTMLElement | HTMLInputElement> | undefined,
         checked?: boolean | undefined,
     ) => {
         if (!checked) {
@@ -35,6 +36,7 @@ const UsersManagementEditComponent: FC<RolesProps> = (props: RolesProps) => {
     };
 
     const _onChangeIsManager = (
+        ev?: FormEvent<HTMLElement | HTMLInputElement> | undefined,
         checked?: boolean | undefined,
     ) => {
         if (!checked) {
@@ -45,6 +47,7 @@ const UsersManagementEditComponent: FC<RolesProps> = (props: RolesProps) => {
     };
 
     const _onChangeIsAdministrator = (
+        ev?: FormEvent<HTMLElement | HTMLInputElement> | undefined,
         checked?: boolean | undefined,
     ) => {
         if (!checked) {
@@ -78,7 +81,7 @@ const UsersManagementEditComponent: FC<RolesProps> = (props: RolesProps) => {
             disabledSaveBtn={false}
             saveMethod={() => _onSave()}
             closeMethod={() => _onCloseDialog()}
-            posting={props.posting}
+            posting={props!.posting}
         >
             <Stack tokens={verticalGapStackTokens}>
                 <Label>Роли</Label>

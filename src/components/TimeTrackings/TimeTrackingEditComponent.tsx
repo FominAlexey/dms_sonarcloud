@@ -4,10 +4,10 @@ import {
     TextField,
     ComboBox,
     IComboBoxOption,
-    IComboBox,
     DatePicker,
     DayOfWeek,
     Checkbox,
+    IComboBox,
 } from '@fluentui/react';
 import { TimeTrackingEdit } from 'src/DAL/TimeTracking';
 import { toUTC, getDateFromLocaleString, DAY_PICKER_STRINGS } from 'src/shared/DateUtils';
@@ -29,7 +29,7 @@ interface Props {
     clearTimeTracking: () => void;
 }
 
-interface validationState {
+interface ValidationState {
     isValidProject: boolean;
     isValidTaskCategory: boolean;
     isValidTimeSpent: boolean;
@@ -50,7 +50,7 @@ const TimeTrackingEditComponent: FC<Props> = (props: Props) => {
 
     const [timeTrackingBillable, setIsBillable] = useState<boolean>(props.timeTracking.billable);
 
-    const [validation, setValidation] = useState<validationState>({
+    const [validation, setValidation] = useState<ValidationState>({
         isValidProject: props.timeTracking.projectId !== zeroGuid,
         isValidTaskCategory: props.timeTracking.taskCategoryId !== zeroGuid,
         isValidTimeSpent: props.timeTracking.timeSpent !== 0,
@@ -104,8 +104,7 @@ const TimeTrackingEditComponent: FC<Props> = (props: Props) => {
         props.saveTimeTracking(newTimeTracking);
     };
 
-    const _onChangeProject = (
-        option?: IComboBoxOption,
+    const _onChangeProject = (event: FormEvent<IComboBox>, option?: IComboBoxOption | undefined, index?: number | undefined, value?: string | undefined
     ): void => {
         if (option) {
             setTimeTrackingProjectId(option.key.toString());
@@ -114,7 +113,10 @@ const TimeTrackingEditComponent: FC<Props> = (props: Props) => {
     };
 
     const _onChangeTaskCategory = (
-        option?: IComboBoxOption,
+        event: FormEvent<IComboBox>,
+        option?: IComboBoxOption | undefined,
+        index?: number | undefined,
+        value?: string | undefined,
     ): void => {
         if (option) {
             setTimeTrackingTaskCategoryId(option.key.toString());
@@ -126,7 +128,7 @@ const TimeTrackingEditComponent: FC<Props> = (props: Props) => {
         date ? setTimeTrackingStartDate(date) : setTimeTrackingStartDate(new Date());
     };
 
-    const _onChangeTimeSpent = (newValue?: string) => {
+    const _onChangeTimeSpent = (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
         setTimeTrackingTimeSpent(Number.parseInt(newValue!) || 0);
         setValidation({ ...validation, isValidTimeSpent: newValue?.toString() !== '0' });
     };
@@ -138,6 +140,7 @@ const TimeTrackingEditComponent: FC<Props> = (props: Props) => {
     };
 
     const _onChangeBillable = (
+        ev?: FormEvent<HTMLInputElement | HTMLElement> | undefined,
         checked?: boolean | undefined,
     ) => {
         if (!checked) {
@@ -148,6 +151,7 @@ const TimeTrackingEditComponent: FC<Props> = (props: Props) => {
     };
 
     const _onChangeTaskIsDone = (
+        ev?: FormEvent<HTMLInputElement | HTMLElement> | undefined,
         checked?: boolean | undefined,
     ) => {
         if (!checked) {
@@ -157,7 +161,7 @@ const TimeTrackingEditComponent: FC<Props> = (props: Props) => {
         }
     };
 
-    const _onChangeTaskNumber = (newValue?: string) => {
+    const _onChangeTaskNumber = (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
         if (newValue) {
             setTaskNumber(newValue);
         } else {
@@ -165,7 +169,7 @@ const TimeTrackingEditComponent: FC<Props> = (props: Props) => {
         }
     };
 
-    const _onChangeTaskName = (newValue?: string) => {
+    const _onChangeTaskName = (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
         if (newValue) {
             setTaskName(newValue);
             setValidation({ ...validation, isValidTaskName: true });
@@ -175,9 +179,7 @@ const TimeTrackingEditComponent: FC<Props> = (props: Props) => {
         }
     };
 
-    const _onChangeTaskDescription = (
-        newValue?: string,
-    ) => {
+    const _onChangeTaskDescription = (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
         if (newValue) {
             setTaskDescription(newValue);
         } else {
@@ -251,7 +253,7 @@ const TimeTrackingEditComponent: FC<Props> = (props: Props) => {
                     label="Дата"
                     firstDayOfWeek={DayOfWeek.Monday}
                     value={timeTrackingStartDate}
-                    formatDate={(date?) => date.toLocaleDateString()}
+                    formatDate={(date?) => date!.toLocaleDateString()}
                     onSelectDate={_onChangeStartDate}
                     allowTextInput={true}
                     parseDateFromString={string => getDateFromLocaleString(string)}

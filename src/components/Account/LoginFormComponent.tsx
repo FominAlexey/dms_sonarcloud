@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect, FormEvent } from 'react';
 import { PrimaryButton, Label, Stack, TextField, Image, ImageFit, KeyCodes } from '@fluentui/react';
 import { useHistory } from 'react-router-dom';
 
@@ -15,7 +15,7 @@ interface Props {
     invertedTheme: boolean;
 }
 
-interface validationState {
+interface ValidationState {
     isValidUsername: boolean;
     isValidPassword: boolean;
 }
@@ -28,7 +28,7 @@ const LoginFormComponent: FC<Props> = (props: Props) => {
     const [password, setPassword] = useState<string | undefined>(undefined);
     const [showValidationError, setShowValidationError] = useState(false);
 
-    const [validation, setValidation] = useState<validationState>({
+    const [validation, setValidation] = useState<ValidationState>({
         isValidUsername: false,
         isValidPassword: false,
     });
@@ -40,19 +40,19 @@ const LoginFormComponent: FC<Props> = (props: Props) => {
         }
     }, [props.hasCredentials, history]);
 
-    const _onChangeUsername = (newValue?: string) => {
+    const _onChangeUsername = (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
         setUsername(newValue);
         setValidation({ ...validation, isValidUsername: newValue?.length !== 0 });
     };
 
-    const _onChangePassword = (newValue?: string) => {
+    const _onChangePassword = (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
         setPassword(newValue);
         setValidation({ ...validation, isValidPassword: newValue?.length !== 0 });
     };
 
     const _onSubmit = () => {
         if (validation.isValidUsername && validation.isValidPassword) {
-            props.login(username.trim(), password);
+            props.login(username!.trim(), password!);
             setShowValidationError(false);
         } else {
             setShowValidationError(true);

@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, FormEvent, useState } from 'react';
 import { Stack, TextField } from '@fluentui/react';
 import EditDialog from 'src/components/EditDialog';
 import { ActionAsyncThunk } from 'src/shared/Common';
@@ -15,6 +15,7 @@ const FeedbackEditComponent: FC<Props> = (props: Props) => {
     const [isValidMessage, setIsValidMessage] = useState(false);
 
     const _onFeedbackMessageChanged = (
+        event: FormEvent<HTMLInputElement | HTMLTextAreaElement>,
         newValue?: string | undefined,
     ) => {
         setFeedbackMessage(newValue);
@@ -27,7 +28,7 @@ const FeedbackEditComponent: FC<Props> = (props: Props) => {
     };
 
     const _onSave = () => {
-        props.sendFeedback(feedbackMessage.trim());
+        props.sendFeedback(feedbackMessage!.trim());
     };
 
     const _onCloseDialog = () => {

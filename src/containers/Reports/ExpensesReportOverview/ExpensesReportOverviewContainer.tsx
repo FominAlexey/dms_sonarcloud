@@ -1,6 +1,6 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, FormEvent, useEffect, useState } from 'react';
 
-import { ComboBox, IComboBoxOption, IComboBox, Label, Spinner } from '@fluentui/react';
+import { ComboBox, IComboBox, IComboBoxOption, Label, Spinner } from '@fluentui/react';
 
 import ExpensesReportOverviewComponent from 'src/components/Reports/ExpensesReportOverviewComponent';
 import ExpensesReportDetailsComponent from 'src/components/Reports/ExpensesReportDetailsComponent';
@@ -50,7 +50,10 @@ const ExpensesReportOverviewContainer: FC<IExpensesReportOverviewProps> = (props
     }, [props.employees]);
 
     const _onChangeCurrentEmployee = (
-        option?: IComboBoxOption,
+        event: FormEvent<IComboBox>,
+        option?: IComboBoxOption | undefined,
+        index?: number | undefined,
+        value?: string | undefined,
     ): void => {
         if (option) {
             setCurrentEmployeeId(option.key.toString());

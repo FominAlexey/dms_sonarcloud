@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, FormEvent, useState } from 'react';
 import { Stack, TextField, DatePicker, DayOfWeek } from '@fluentui/react';
 import { EmployeeEdit } from 'src/DAL/Employees';
 import { toUTC, getDateFromLocaleString, DAY_PICKER_STRINGS } from 'src/shared/DateUtils';
@@ -15,7 +15,7 @@ interface Props {
     clearEmployee: () => void;
 }
 
-interface validationState {
+interface ValidationState {
     isValidFullName: boolean;
     isValidPhone: boolean;
 }
@@ -26,7 +26,7 @@ const UserProfileEditComponent: FC<Props> = (props: Props) => {
     const [employeeBirthDate, setEmployeeBirthDate] = useState<Date>(props.employee.birthDate);
     const [employeePhone, setEmployeePhone] = useState<string | undefined>(props.employee.phone);
 
-    const [validation, setValidation] = useState<validationState>({
+    const [validation, setValidation] = useState<ValidationState>({
         isValidFullName: props.employee.fullName ? props.employee.fullName.trim().length !== 0 : false,
         isValidPhone: props.employee.phone ? PhoneReg.test(props.employee.phone) : false,
     });
@@ -38,10 +38,10 @@ const UserProfileEditComponent: FC<Props> = (props: Props) => {
     const _onSave = () => {
         const newEmployee: EmployeeEdit = {
             id: props.employee.id,
-            fullName: employeeFullName.trim(),
+            fullName: employeeFullName!.trim(),
             birthDate: toUTC(employeeBirthDate),
             email: props.employee.email,
-            phone: employeePhone.trim(),
+            phone: employeePhone!.trim(),
             employedDate: toUTC(props.employee.employedDate),
             leaveDate: props.employee.leaveDate ? toUTC(props.employee.leaveDate) : null,
             isLeave: props.employee.isLeave,
@@ -53,7 +53,7 @@ const UserProfileEditComponent: FC<Props> = (props: Props) => {
         props.saveEmployee(newEmployee);
     };
 
-    const _onChangeFullname = (newValue?: string) => {
+    const _onChangeFullname = (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
         setEmployeeFullname(newValue);
         if (newValue) {
             setValidation({ ...validation, isValidFullName: newValue.trim().length !== 0 });
@@ -62,7 +62,7 @@ const UserProfileEditComponent: FC<Props> = (props: Props) => {
         }
     };
 
-    const _onChangePhone = (newValue?: string) => {
+    const _onChangePhone = (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
         setEmployeePhone(newValue);
         if (newValue) {
             if (PhoneReg.test(newValue)) {
@@ -107,7 +107,7 @@ const UserProfileEditComponent: FC<Props> = (props: Props) => {
                     label="Дата рождения"
                     value={employeeBirthDate}
                     firstDayOfWeek={DayOfWeek.Monday}
-                    formatDate={(date?) => date.toLocaleDateString()}
+                    formatDate={(date?) => date!.toLocaleDateString()}
                     onSelectDate={_onChangeBirthDate}
                     allowTextInput={true}
                     parseDateFromString={string => getDateFromLocaleString(string)}

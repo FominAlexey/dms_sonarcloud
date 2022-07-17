@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, FormEvent, SyntheticEvent, useState } from 'react';
 import { Stack, TextField, ColorPicker, IColor } from '@fluentui/react';
 import { ExpenseCategory } from 'src/DAL/Dictionaries';
 import { requiredMessage } from 'src/shared/Constants';
@@ -14,7 +14,7 @@ interface Props {
     clearExpenseCategory: () => void;
 }
 
-interface validationState {
+interface ValidationState {
     isValidTitle: boolean;
     isValidColor: boolean;
 }
@@ -24,7 +24,7 @@ const ExpenseCategoryEditComponent: FC<Props> = (props: Props) => {
     const [expenseCategoryTitle, setExpenseCategoryTitle] = useState<string | undefined>(props.expenseCategory.title);
     const [expenseCategoryColor, setExpenseCategoryColor] = useState<string | undefined>(props.expenseCategory.color);
 
-    const [validation, setValidation] = useState<validationState>({
+    const [validation, setValidation] = useState<ValidationState>({
         isValidTitle: props.expenseCategory.title ? props.expenseCategory.title.trim().length !== 0 : false,
         isValidColor: props.expenseCategory.color ? RgbReg.test(props.expenseCategory.color) : false,
     });
@@ -36,13 +36,13 @@ const ExpenseCategoryEditComponent: FC<Props> = (props: Props) => {
     const _onSave = () => {
         const newExpenseCategory: ExpenseCategory = {
             id: props.expenseCategory.id,
-            title: expenseCategoryTitle.trim(),
-            color: expenseCategoryColor.trim().toUpperCase(),
+            title: expenseCategoryTitle!.trim(),
+            color: expenseCategoryColor!.trim().toUpperCase(),
         };
         props.saveExpenseCategory(newExpenseCategory);
     };
 
-    const _onChangeTitle = (newValue?: string) => {
+    const _onChangeTitle = (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
         setExpenseCategoryTitle(newValue);
         if (newValue) {
             setValidation({ ...validation, isValidTitle: newValue.trim().length !== 0 });
@@ -51,7 +51,7 @@ const ExpenseCategoryEditComponent: FC<Props> = (props: Props) => {
         }
     };
 
-    const _onChangeColorPicker = (color: IColor) => {
+    const _onChangeColorPicker = (ev: SyntheticEvent<HTMLElement, Event>, color: IColor) => {
         setExpenseCategoryColor(color.str);
 
         if (!validation.isValidColor) setValidation({ ...validation, isValidColor: true });

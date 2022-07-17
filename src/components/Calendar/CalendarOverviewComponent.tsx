@@ -75,7 +75,7 @@ const CalendarOverviewComponent: FC<Props> = (props: Props) => {
         return result.length !== 0 && result[0].color ? result[0].color : defaultCategoryColor;
     };
 
-    const _renderItemColumn = (item: any, column?: IColumn) => {
+    const _renderItemColumn = (item?: any, index?: number | undefined, column?: IColumn | undefined) => {
         // Cell text color
         let cellTextColor: string = defaultColor;
 
@@ -89,7 +89,7 @@ const CalendarOverviewComponent: FC<Props> = (props: Props) => {
             return <div>{fieldContent}</div>;
         } else {
             // Hightlight weekens
-            if (!isWorkingDay(new Date(column.key), props.productionCalendar)) {
+            if (!isWorkingDay(new Date(column!.key), props.productionCalendar)) {
                 cellTextColor = weekendColor;
             }
             // If cell include content

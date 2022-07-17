@@ -54,7 +54,7 @@ const TimeTrackingsListComponent: FC<Props> = (props: Props) => {
         setColumns(getDaysColumns(getStartOfWeek(props.currentDate), WEEK_LENGTH, 40));
     }, [props.currentDate]);
 
-    const _renderItemColumn = (item: IListTimeTrackingItems, column?: IColumn) => {
+    const _renderItemColumn = (item?: any, index?: number | undefined, column?: IColumn | undefined) => {
         const fieldContent = item[column?.fieldName as keyof IListItem] as string;
         // Render title column items
         if (column?.key === 'titleColumn') {
@@ -102,7 +102,7 @@ const TimeTrackingsListComponent: FC<Props> = (props: Props) => {
                                 props.addingTimeTracking(
                                     item.projectId,
                                     item.taskCategoryId,
-                                    getDateFromLocaleString(column.fieldName!),
+                                    getDateFromLocaleString(column!.fieldName!),
                                 )
                             }
                         />
@@ -129,7 +129,7 @@ const TimeTrackingsListComponent: FC<Props> = (props: Props) => {
         );
     };
 
-    const _renderDetailsHeaderItemColumn = (column?: IColumn) => {
+    const _renderDetailsHeaderItemColumn = (item?: any, index?: number | undefined, column?: IColumn | undefined) => {
         if (column?.key === 'titleColumn') {
             // Render tasks header column
             return <div className="fs-14 fw-bold">{column?.name}</div>;
@@ -156,11 +156,11 @@ const TimeTrackingsListComponent: FC<Props> = (props: Props) => {
             <Callout target={currentElement} onDismiss={() => setShowTools(false)}>
                 <IconButton
                     iconProps={{ iconName: 'Edit', title: 'Изменить' }}
-                    onClick={() => props?.editingTimeTracking(currentId)}
+                    onClick={() => props?.editingTimeTracking(currentId!)}
                 />
                 <IconButton
                     iconProps={{ iconName: 'Delete', title: 'Удалить', className: 'red' }}
-                    onClick={() => props?.deleteTimeTracking(currentId)}
+                    onClick={() => props?.deleteTimeTracking(currentId!)}
                 />
             </Callout>
         );
